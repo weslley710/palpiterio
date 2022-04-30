@@ -1,0 +1,38 @@
+<div class="animated fadeIn mat-elevation-z8">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<mat-toolbar> 
+					<mat-toolbar-row> 
+						<mat-icon>menu</mat-icon>
+						<span *ngIf="state == 'cadastrar'">Cadastrar Função</span>
+						<span *ngIf="state == 'editar'">Editar Função</span>
+						<span class="spacer"></span>
+					</mat-toolbar-row>
+				</mat-toolbar>
+		        <div class="card-body">
+					<form #formulario="ngForm">
+						<div class="form">
+						  	<mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>Nome</mat-label>
+						    	<input [(ngModel)]="funcao.nome" name="funcao.nome" matInput maxlength="50" required>
+						  	</mat-form-field>
+						  	
+						  	<mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>Descrição</mat-label>
+						    	<input [(ngModel)]="funcao.descricao" name="funcao.descricao" maxlength="200" matInput required>
+						  	</mat-form-field>
+						</div>
+
+					  	<div class="buttons">
+					  		<button (click)="salvar()" [disabled]="!formulario.form.valid" mat-raised-button color="primary" *ngIf="state != 'editar'">Salvar</button>
+					  		<button (click)="atualizar()" [disabled]="!formulario.form.valid" mat-raised-button color="primary" *ngIf="state == 'editar'">Atualizar</button>
+					  		<button (click)="cancelar()" mat-raised-button color="warn">Cancelar</button>
+					  	</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!--/.col-->
+	</div>
+</div>

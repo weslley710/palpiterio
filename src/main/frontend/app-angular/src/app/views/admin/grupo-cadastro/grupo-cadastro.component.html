@@ -1,0 +1,75 @@
+<div class="animated fadeIn mat-elevation-z8">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<mat-toolbar> 
+					<mat-toolbar-row> 
+						<mat-icon>menu</mat-icon>
+						<span *ngIf="state == 'cadastrar'">Cadastrar Grupo</span>
+						<span *ngIf="state == 'editar'">Editar Grupo</span>
+						<span class="spacer"></span>
+					</mat-toolbar-row>
+				</mat-toolbar>
+		        <div class="card-body">
+					<form #formulario="ngForm">
+						<div class="form">
+						  	<mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>Nome</mat-label>
+						    	<input [(ngModel)]="grupo.nome" name="grupo.nome" matInput maxlength="10" required>
+						  	</mat-form-field>
+						  	
+						  	<mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>Qtd. Classificados</mat-label>
+						    	<input [(ngModel)]="grupo.qtdClassificados" name="grupo.qtdClassificados" maxlength="3" matInput required>
+						  	</mat-form-field>
+						  	
+						  	<mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>Evento</mat-label>
+						    	<mat-select [(ngModel)]="evento" name="evento" [compareWith]="compareWith">
+								   <mat-option *ngFor="let evento of eventoList" (onSelectionChange)="onEventoChange($event, evento)" [value]="evento">{{evento.nome}}</mat-option>
+								</mat-select>
+						  	</mat-form-field>
+						  	
+						  	<mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>Fase do Evento</mat-label>
+						    	<mat-select [(ngModel)]="grupo.faseEvento" name="grupo.faseEvento" [compareWith]="compareWith" required>
+								   <mat-option *ngFor="let faseEvento of faseEventoList" [value]="faseEvento">{{faseEvento.descricao}}</mat-option>
+								</mat-select>
+						  	</mat-form-field>
+						  	
+						  	<fieldset class="fieldset mat-elevation-z8">
+       							<legend class="col-form-legend col-sm-2">Participantes</legend>
+							  	<div style="margin-top: 10px; padding: 5px;">
+								  	<mat-form-field appearance="outline" [style.width.%]="25">
+								    	<mat-label>Países</mat-label>
+									    <input type="text" placeholder="Selecione um" #pais aria-label="Países" matInput [matAutocomplete]="participantes" (keyup)="applyFilter($event)">
+								    	<mat-autocomplete #participantes="matAutocomplete" [displayWith]="displayFn" (optionSelected)='addParticipante($event.option.value)'>
+										   <mat-option *ngFor="let pais of paisListAux" [value]="pais">{{pais.nome}}</mat-option>
+										</mat-autocomplete>
+								  	</mat-form-field>
+								  	
+								  	<button type="button" mat-mini-fab color="accent" style="top: -5px; margin-left: 15px;">
+										<mat-icon>arrow_forward</mat-icon>
+									</button>
+								  	
+									<div style="display: contents; margin-left: 50px;">
+										<span *ngFor = "let pais of paisListSelected">
+											<i style="margin-left: 20px;" class="flag-icon {{pais.bandeira}} h3" title="{{pais.nome}}"></i>										
+										</span>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+
+					  	<div class="buttons">
+					  		<button (click)="salvar()" [disabled]="!formulario.form.valid" mat-raised-button color="primary" *ngIf="state != 'editar'">Salvar</button>
+					  		<button (click)="atualizar()" [disabled]="!formulario.form.valid" mat-raised-button color="primary" *ngIf="state == 'editar'">Atualizar</button>
+					  		<button (click)="cancelar()" mat-raised-button color="warn">Cancelar</button>
+					  	</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!--/.col-->
+	</div>
+</div>

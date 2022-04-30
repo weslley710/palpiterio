@@ -1,0 +1,71 @@
+<div class="animated fadeIn mat-elevation-z8">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<mat-toolbar> 
+					<mat-toolbar-row> 
+						<mat-icon>menu</mat-icon>
+						<span *ngIf="state == 'cadastrar'">Cadastrar Usuário</span>
+						<span *ngIf="state == 'editar'">Editar Usuário</span>
+						<span class="spacer"></span>
+					</mat-toolbar-row>
+				</mat-toolbar>
+		        <div class="card-body">
+					<form #formulario="ngForm">
+						<div class="form">
+						  	<mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>Nome</mat-label>
+						    	<input [(ngModel)]="usuario.nome" name="usuario.nome" matInput placeholder="Ex. Jessica Alba" maxlength="50" required>
+						  	</mat-form-field>
+						  	
+						  	<mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>Login</mat-label>
+						    	<input [(ngModel)]="usuario.login" name="usuario.login" maxlength="20" matInput required>
+						  	</mat-form-field>
+						  	
+						  	<mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>E-mail</mat-label>
+						    	<input [(ngModel)]="usuario.email" name="usuario.email" matInput placeholder="pat@example.com" maxlength="50" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" required>
+						  	</mat-form-field>
+						  	
+						  	<mat-form-field class="data-nascimento" appearance="outline" [style.width.%]="25">
+							    <mat-label>Data de Nascimento</mat-label>
+							    <input [(ngModel)]="usuario.dataNascimento" name="usuario.dataNascimento" matInput maxlength="10" [matDatepicker]="dtNascimento" required>
+							    <mat-datepicker-toggle matSuffix [for]="dtNascimento"></mat-datepicker-toggle>
+							    <mat-datepicker #dtNascimento disabled="false"></mat-datepicker>
+						  	</mat-form-field>
+						  	
+						  	<mat-form-field appearance="outline" [style.width.%]="25" *ngIf="state != 'editar'">
+						    	<mat-label>Senha</mat-label>
+						    	<input [(ngModel)]="usuario.senha" name="usuario.senha" type="password" matInput required>
+						  	</mat-form-field>
+						  	
+						  	<mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>Função</mat-label>
+						    	<mat-select [(ngModel)]="usuario.funcaoList" name="usuario.funcaoList" [compareWith]="compareWithFuncao" multiple>
+								   <mat-option *ngFor="let funcao of funcaoList" [value]="funcao">{{funcao.nome}}</mat-option>
+								</mat-select>
+						  	</mat-form-field>
+
+						  	<mat-form-field appearance="outline" [style.width.%]="25" *ngIf="state == 'editar'">
+						    	<mat-label>Ativo?</mat-label>
+						    	<mat-select [(ngModel)]="usuario.isAtivo" name="usuario.isAtivo" required>
+								   <mat-option [value]="true">Sim</mat-option>
+      							   <mat-option [value]="false">Não</mat-option>
+								</mat-select>
+						  	</mat-form-field>
+						</div>
+						 	
+					  	<div class="buttons">
+					  		<button (click)="salvar()" [disabled]="!formulario.form.valid" mat-raised-button color="primary" *ngIf="state != 'editar'">Salvar</button>
+					  		<button (click)="atualizar()" [disabled]="!formulario.form.valid" mat-raised-button color="primary" *ngIf="state == 'editar'">Atualizar</button>
+					  		<button (click)="cancelar()" mat-raised-button color="warn">Cancelar</button>
+					  	</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!--/.col-->
+	</div>
+</div>
+

@@ -1,0 +1,125 @@
+<div class="animated fadeIn mat-elevation-z8">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<mat-toolbar> 
+					<mat-toolbar-row> 
+						<mat-icon>menu</mat-icon>
+						<span *ngIf="state == 'cadastrar'">Cadastrar Evento</span>
+						<span *ngIf="state == 'editar'">Editar Evento</span>
+						<span class="spacer"></span>
+					</mat-toolbar-row>
+				</mat-toolbar>
+		        <div class="card-body">
+					<div class="form">
+					  	<mat-stepper linear #stepper>
+						  
+						  <mat-step [stepControl]="eventoFormGroup" [editable]="isEditable">
+						    <form [formGroup]="eventoFormGroup">
+						      <ng-template matStepLabel>Adicionando Evento</ng-template>
+						      
+						      <mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>Nome</mat-label>
+						    	<input formControlName="nome" [(ngModel)]="evento.nome" matInput maxlength="50" required>
+						  	  </mat-form-field>
+						  	  
+						  	  <mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>Organizador</mat-label>
+						    	<input formControlName="organizador" [(ngModel)]="evento.organizador" maxlength="50" matInput required>
+						  	  </mat-form-field>
+						  	  
+						  	  <mat-form-field class="data" appearance="outline" [style.width.%]="25">
+							    <mat-label>Data Inicio</mat-label>
+							    <input formControlName="dataInicio" [(ngModel)]="evento.dataInicio" matInput maxlength="10" [matDatepicker]="dtInicio" required>
+							    <mat-datepicker-toggle matSuffix [for]="dtInicio"></mat-datepicker-toggle>
+							    <mat-datepicker #dtInicio disabled="false"></mat-datepicker>
+						  	  </mat-form-field>
+						  	
+						  	  <mat-form-field class="data" appearance="outline" [style.width.%]="25">
+							    <mat-label>Data Fim</mat-label>
+							    <input formControlName="dataFim" [(ngModel)]="evento.dataFim" matInput maxlength="10" [matDatepicker]="dtFim" required>
+							    <mat-datepicker-toggle matSuffix [for]="dtFim"></mat-datepicker-toggle>
+							    <mat-datepicker #dtFim disabled="false"></mat-datepicker>
+						  	  </mat-form-field>
+						  	  
+						      <div class="buttons">
+								<button (click)="cancelar()" mat-raised-button color="warn">Cancelar</button>
+						        <button mat-button matStepperNext mat-raised-button color="primary">Próximo</button>
+						      </div>
+						    </form>
+						  </mat-step>
+						  
+						  <mat-step [stepControl]="faseEventoFormGroup" [editable]="isEditable">
+						    <form [formGroup]="faseEventoFormGroup">
+						      <ng-template matStepLabel>Adicionando as Fases</ng-template>
+						      
+						      <mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>Descricao</mat-label>
+						    	<input formControlName="descricao" matInput maxlength="50">
+						  	  </mat-form-field>
+						      
+						      <mat-form-field class="data" appearance="outline" [style.width.%]="25">
+							    <mat-label>Data Inicio</mat-label>
+							    <input formControlName="dataInicio" matInput maxlength="10" [matDatepicker]="dtInicioFase">
+							    <mat-datepicker-toggle matSuffix [for]="dtInicioFase"></mat-datepicker-toggle>
+							    <mat-datepicker #dtInicioFase disabled="false"></mat-datepicker>
+						  	  </mat-form-field>
+						  	
+						  	  <mat-form-field class="data" appearance="outline" [style.width.%]="25">
+							    <mat-label>Data Fim</mat-label>
+							    <input formControlName="dataFim" matInput maxlength="10" [matDatepicker]="dtFimFase">
+							    <mat-datepicker-toggle matSuffix [for]="dtFimFase"></mat-datepicker-toggle>
+							    <mat-datepicker #dtFimFase disabled="false"></mat-datepicker>
+						  	  </mat-form-field>
+						  	  
+   	 		            	  <div class="button-container" [style.width.%]="5">
+							      <button (click)="addFaseEvento()" mat-mini-fab color="accent" title="Adicionar fase">
+							        <mat-icon>plus_one</mat-icon>
+							      </button>
+							  </div>
+							  
+							  <div class="card-body" *ngIf = "faseEventoList.length > 0">
+							  	<table class="table table-bordered">
+									<thead>
+						              <tr class="mat-header-row">
+						                <th>Descrição</th>
+						                <th>Data Inicio</th>
+						                <th>Data Fim</th>
+						                <th class="align-center">Ações</th>
+						              </tr>
+						            </thead>
+						            <tbody *ngFor = "let faseEvento of faseEventoList">
+						              <tr>
+										<td>{{ faseEvento.descricao }}</td>						              
+										<td>{{ faseEvento.dataInicio | date: 'dd/MM/yyyy' }}</td>
+										<td>{{ faseEvento.dataFim | date: 'dd/MM/yyyy' }}</td>
+										<td class="align-center">
+											<div class="actions">
+												<button (click)="editar(faseEvento.id)" mat-mini-fab color="accent">
+													<mat-icon>edit</mat-icon>
+												</button>
+												<button (click)="deletar(faseEvento.id)" mat-mini-fab color="warn">
+													<mat-icon>delete</mat-icon>
+												</button>
+											</div>
+										</td>
+						              </tr>
+						            </tbody>
+								</table>
+							  </div>
+
+						      <div class="buttons">
+						        <button mat-button matStepperPrevious mat-raised-button color="warn">Voltar</button>
+						        <button mat-button (click)="salvar()" mat-raised-button color="primary" [disabled]="!(faseEventoList.length > 0)" >Finalizar</button>
+						      </div>
+						    </form>
+						  </mat-step>
+
+						</mat-stepper>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/.col-->
+	</div>
+</div>
