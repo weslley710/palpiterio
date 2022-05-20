@@ -35,7 +35,6 @@ public class JwtAuthenticationResource {
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> generateAuthenticationToken(@RequestBody JwtRequest jwtRequest) throws Exception {
-
 		authenticate(jwtRequest.getLogin(), jwtRequest.getSenha());
 
 		final UserDetails userDetails = jwtInMemoryUserDetailsService.loadUserByUsername(jwtRequest.getLogin());

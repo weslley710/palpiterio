@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppMaterialModule } from '../../modules/app-material/app-material.module';
@@ -16,6 +16,8 @@ import { EventoComponent } from './evento/evento.component';
 import { EventoCadastroComponent } from './evento-cadastro/evento-cadastro.component';
 import { GrupoComponent } from './grupo/grupo.component';
 import { GrupoCadastroComponent } from './grupo-cadastro/grupo-cadastro.component';
+import { BolaoComponent } from './bolao/bolao.component';
+import { BolaoCadastroComponent } from './bolao-cadastro/bolao-cadastro.component';
 
 @NgModule({
   declarations: [
@@ -28,14 +30,16 @@ import { GrupoCadastroComponent } from './grupo-cadastro/grupo-cadastro.componen
     EventoComponent,
     EventoCadastroComponent,
     GrupoComponent,
-    GrupoCadastroComponent
+    GrupoCadastroComponent,
+    BolaoComponent,
+    BolaoCadastroComponent
   ],
   imports: [
 	FormsModule,
 	ReactiveFormsModule,
-    CommonModule,
     AdminRoutingModule,
-    AppMaterialModule
+    AppMaterialModule,
+    CommonModule
   ]
 })
 

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,6 +28,11 @@ import { RegisterComponent } from './views/register/register.component';
 import { BasicAuthHtppInterceptorService } from '../app/services/basic-auth-htpp-interceptor.service';
 
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+
+registerLocaleData(localePt);
 
 import { AppMaterialModule } from './../app/modules/app-material/app-material.module';
 
@@ -87,6 +92,10 @@ import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.
     },
     {
 	  provide: MAT_DATE_LOCALE, 
+	  useValue: 'pt-BR' 
+	},
+	{
+	  provide: LOCALE_ID, 
 	  useValue: 'pt-BR' 
 	},
     IconSetService,

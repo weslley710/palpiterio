@@ -11,62 +11,119 @@
 					</mat-toolbar-row>
 				</mat-toolbar>
 		        <div class="card-body">
-					<form #formulario="ngForm">
-						<div class="form">
-						  	<mat-form-field appearance="outline" [style.width.%]="25">
-						    	<mat-label>Nome</mat-label>
-						    	<input [(ngModel)]="grupo.nome" name="grupo.nome" matInput maxlength="10" required>
-						  	</mat-form-field>
-						  	
-						  	<mat-form-field appearance="outline" [style.width.%]="25">
-						    	<mat-label>Qtd. Classificados</mat-label>
-						    	<input [(ngModel)]="grupo.qtdClassificados" name="grupo.qtdClassificados" maxlength="3" matInput required>
-						  	</mat-form-field>
-						  	
-						  	<mat-form-field appearance="outline" [style.width.%]="25">
-						    	<mat-label>Evento</mat-label>
-						    	<mat-select [(ngModel)]="evento" name="evento" [compareWith]="compareWith">
-								   <mat-option *ngFor="let evento of eventoList" (onSelectionChange)="onEventoChange($event, evento)" [value]="evento">{{evento.nome}}</mat-option>
-								</mat-select>
-						  	</mat-form-field>
-						  	
-						  	<mat-form-field appearance="outline" [style.width.%]="25">
-						    	<mat-label>Fase do Evento</mat-label>
-						    	<mat-select [(ngModel)]="grupo.faseEvento" name="grupo.faseEvento" [compareWith]="compareWith" required>
-								   <mat-option *ngFor="let faseEvento of faseEventoList" [value]="faseEvento">{{faseEvento.descricao}}</mat-option>
-								</mat-select>
-						  	</mat-form-field>
-						  	
-						  	<fieldset class="fieldset mat-elevation-z8">
-       							<legend class="col-form-legend col-sm-2">Participantes</legend>
-							  	<div style="margin-top: 10px; padding: 5px;">
-								  	<mat-form-field appearance="outline" [style.width.%]="25">
-								    	<mat-label>Países</mat-label>
-									    <input type="text" placeholder="Selecione um" #pais aria-label="Países" matInput [matAutocomplete]="participantes" (keyup)="applyFilter($event)">
-								    	<mat-autocomplete #participantes="matAutocomplete" [displayWith]="displayFn" (optionSelected)='addParticipante($event.option.value)'>
-										   <mat-option *ngFor="let pais of paisListAux" [value]="pais">{{pais.nome}}</mat-option>
-										</mat-autocomplete>
-								  	</mat-form-field>
-								  	
-								  	<button type="button" mat-mini-fab color="accent" style="top: -5px; margin-left: 15px;">
-										<mat-icon>arrow_forward</mat-icon>
-									</button>
-								  	
-									<div style="display: contents; margin-left: 50px;">
-										<span *ngFor = "let pais of paisListSelected">
-											<i style="margin-left: 20px;" class="flag-icon {{pais.bandeira}} h3" title="{{pais.nome}}"></i>										
-										</span>
+					
+					<div class="form">
+					  	<mat-tab-group #tabGrupo color="accent" backgroundColor="primary">
+						  	<mat-tab label="Grupo" #tab01 [disabled]="!tab01.isActive">
+						  		<form #formGrupo="ngForm">
+							  		<div style="margin-top: 10px;"> 
+								  		<mat-form-field appearance="outline" [style.width.%]="25">
+									    	<mat-label>Nome</mat-label>
+									    	<input [(ngModel)]="grupo.nome" name="grupo.nome" matInput maxlength="10" required>
+									  	</mat-form-field>
+									  	
+									  	<mat-form-field appearance="outline" [style.width.%]="25">
+									    	<mat-label>Qtd. Classificados</mat-label>
+									    	<input [(ngModel)]="grupo.qtdClassificados" name="grupo.qtdClassificados" maxlength="3" matInput required>
+									  	</mat-form-field>
+									  	
+									  	<mat-form-field appearance="outline" [style.width.%]="25">
+									    	<mat-label>Evento</mat-label>
+									    	<mat-select [(ngModel)]="evento" name="evento" [compareWith]="compareWith">
+											   <mat-option *ngFor="let evento of eventoList" (onSelectionChange)="onEventoChange($event, evento)" [value]="evento">{{evento.nome}}</mat-option>
+											</mat-select>
+									  	</mat-form-field>
+									  	
+									  	<mat-form-field appearance="outline" [style.width.%]="25">
+									    	<mat-label>Fase do Evento</mat-label>
+									    	<mat-select [(ngModel)]="grupo.faseEvento" name="grupo.faseEvento" [compareWith]="compareWith" required>
+											   <mat-option *ngFor="let faseEvento of faseEventoList" [value]="faseEvento">{{faseEvento.descricao}}</mat-option>
+											</mat-select>
+									  	</mat-form-field>
 									</div>
-								</div>
-							</fieldset>
-						</div>
-
-					  	<div class="buttons">
-					  		<button (click)="salvar()" [disabled]="!formulario.form.valid" mat-raised-button color="primary" *ngIf="state != 'editar'">Salvar</button>
-					  		<button (click)="atualizar()" [disabled]="!formulario.form.valid" mat-raised-button color="primary" *ngIf="state == 'editar'">Atualizar</button>
-					  		<button (click)="cancelar()" mat-raised-button color="warn">Cancelar</button>
-					  	</div>
-					</form>
+									<div class="buttons">
+								  		<button (click)="goTabClick(tabGrupo)" [disabled]="!formGrupo.form.valid" mat-raised-button color="primary">Avançar</button>
+								  		<button (click)="cancelar()" mat-raised-button color="warn">Cancelar</button>
+								  	</div>
+								</form>
+						  	</mat-tab>
+						  	
+						  	<mat-tab label="Participantes" #tab02 [disabled]="!tab02.isActive"> 
+							  	<form #formParticipantes="ngForm">
+								  	<div style="margin-top: 10px; padding: 5px;">
+									  	<mat-form-field appearance="outline" [style.width.%]="25">
+									    	<mat-label>Países</mat-label>
+										    <input type="text" placeholder="Selecione um" #pais aria-label="Países" matInput [matAutocomplete]="participantes" (keyup)="applyFilter($event)">
+									    	<mat-autocomplete #participantes="matAutocomplete" [displayWith]="displayFn" (optionSelected)='addParticipante($event.option.value)'>
+											   <mat-option *ngFor="let pais of paisListAux" [value]="pais">{{pais.nome}}</mat-option>
+											</mat-autocomplete>
+									  	</mat-form-field>
+									  	
+									  	<button type="button" mat-mini-fab color="accent" style="top: -5px; margin-left: 15px;">
+											<mat-icon>arrow_forward</mat-icon>
+										</button>
+									  	
+										<div style="display: contents; margin-left: 50px;">
+											<span *ngFor = "let pais of paisListSelected">
+												<span style="margin-left: 15px;">{{pais.sigla}}</span>
+												<i style="margin-left: 5px;" class="flag-icon {{pais.bandeira}} h3" title="{{pais.nome}}"></i>										
+											</span>
+										</div>
+									</div>
+									<div class="buttons">
+								  		<button (click)="goTabClick(tabGrupo)" [disabled]="!(paisListSelected.length > 0)" mat-raised-button color="primary">Avançar</button>
+								  		<button (click)="backTabClick(tabGrupo)" mat-raised-button color="warn">Voltar</button>
+								  	</div>
+								</form>
+						  	</mat-tab>
+						  	
+						  	<mat-tab label="Rodadas / Confrontos" #tab03 [disabled]="!tab03.isActive"> 
+						  		<form #formRodada="ngForm">
+							  		<div style="margin-top: 10px;"> 
+								  		<mat-form-field appearance="outline" [style.width.%]="25">
+									    	<mat-label>Rodada</mat-label>
+									    	<input [(ngModel)]="rodada.descricao" name="rodada.descricao" matInput maxlength="20" required>
+									  	</mat-form-field>
+									  	
+									  	<mat-card *ngIf="rodada.descricao != '' || confrontoList.length > 0">
+											<mat-toolbar class="toolbar" color="primary">Confrontos da Rodada</mat-toolbar>
+										  	<mat-card-content>
+										  		<div style="margin-top: 10px;">
+											  		<mat-form-field appearance="outline" [style.width.%]="25">
+													    <mat-label>Data Hora do Confronto</mat-label>
+													    <input [(ngModel)]="confronto.dataHora" name="confronto.dataHora" matInput maxlength="16" type="datetime-local">
+												  	</mat-form-field>
+	
+												  	<mat-form-field *ngIf="confronto.dataHora" appearance="outline" [style.width.%]="25">
+												    	<mat-label>Países</mat-label>
+													    <input type="text" placeholder="Selecione um" #pais aria-label="Países" matInput [matAutocomplete]="participantesConfronto" (keyup)="applyFilter($event)">
+												    	<mat-autocomplete #participantesConfronto="matAutocomplete" [displayWith]="displayFn" (optionSelected)='addConfronto($event.option.value)'>
+														   <mat-option *ngFor="let pais of paisListSelected" [value]="pais">{{pais.nome}}</mat-option>
+														</mat-autocomplete>
+												  	</mat-form-field>
+												 </div>
+												 <div style="margin-top: 10px;">
+												 	<div *ngFor = "let confronto of confrontoList">
+														<span style="margin-left: 10px;">{{confronto.rodadaDescricao}}:</span>
+														<span style="margin-left: 10px;">{{confronto.dataHora | date: 'dd/MM/yyyy HH:mm'}} -></span>
+														<i style="margin-left: 5px;" class="flag-icon {{confronto.adversarioCasa.bandeira}} h3" title="{{confronto.adversarioCasa.nome}}"></i>										
+														vs
+														<i style="margin-left: 5px;" class="flag-icon {{confronto.adversarioFora.bandeira}} h3" title="{{confronto.adversarioFora.nome}}"></i>
+												 	</div>												 
+												 </div>
+										  	</mat-card-content>
+										</mat-card>
+									</div>
+									<div class="buttons">
+										<button (click)="salvar()" [disabled]="confrontoList.length == 0" mat-raised-button color="primary" *ngIf="state != 'editar'">Salvar</button>
+					  					<button (click)="atualizar()" [disabled]="confrontoList.length == 0" mat-raised-button color="primary" *ngIf="state == 'editar'">Atualizar</button>
+					  					<button (click)="backTabClick(tabGrupo)" mat-raised-button color="warn">Voltar</button>								
+									</div>
+								</form>
+						  	</mat-tab>
+						  	
+						</mat-tab-group>
+					</div>
 				</div>
 			</div>
 		</div>

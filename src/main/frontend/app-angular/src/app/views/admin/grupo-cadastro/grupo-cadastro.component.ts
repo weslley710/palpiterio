@@ -2,20 +2,21 @@ import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import {FormControl} from '@angular/forms';
+import { FormControl } from '@angular/forms';
+import { MatTabGroup } from '@angular/material/tabs';
 
 import { Grupo } from 'src/app/models/grupo';
-import { GrupoService } from 'src/app/services/grupo.service';
-
+import { Rodada } from 'src/app/models/rodada';
 import { Evento } from 'src/app/models/evento';
-import { EventoService } from 'src/app/services/evento.service';
-
 import { Pais } from 'src/app/models/pais';
-import { PaisService } from 'src/app/services/pais.service';
-
+import { Confronto } from 'src/app/models/confronto';
 import { FaseEvento } from 'src/app/models/fase-evento';
 
-import { NotificationService } from '../../../services/notification.service'
+import { GrupoService } from 'src/app/services/grupo.service';
+import { EventoService } from 'src/app/services/evento.service';
+import { PaisService } from 'src/app/services/pais.service';
+
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-grupo-cadastro',
@@ -30,12 +31,29 @@ export class GrupoCadastroComponent implements OnInit {
 	nome: '',
 	qtdClassificados: null,
 	faseEvento: null,
-	participanteList: []
+	participanteList: [],
+	rodadaList: []
   }
   
+  rodada: Rodada = {
+	descricao: '',
+	grupo: null,
+	confrontoList: []
+  }
+  
+  confronto: Confronto = {
+	dataHora: null,
+	adversarioCasa: null,
+	adversarioFora: null,
+	rodada: null
+  }
+
   evento: Evento;
   eventoList: Evento[] = [];
   faseEventoList: FaseEvento[] = [];
+  
+  confrontoList: Confronto[] = [];
+  rodadaList: Rodada[] = [];
   
   paisList: Pais[] = [];
   paisListAux: Pais[] = [];
@@ -67,6 +85,7 @@ export class GrupoCadastroComponent implements OnInit {
   }
   
   salvar(): void {
+	this.grupo.rodadaList = this.rodadaList;
 	this.grupo.participanteList = this.paisListSelected;
 
 	this.grupoService.save(this.grupo).subscribe((grupo) => {
@@ -78,6 +97,7 @@ export class GrupoCadastroComponent implements OnInit {
   }
   
   atualizar(): void {
+	this.grupo.rodadaList = this.rodadaList;
 	this.grupo.participanteList = this.paisListSelected;
 	
 	this.grupoService.update(this.grupo).subscribe((grupo) => {
@@ -93,6 +113,10 @@ export class GrupoCadastroComponent implements OnInit {
 		this.grupo = grupo;
 		this.paisListSelected = this.grupo.participanteList;
 		
+		grupo.rodadaList.forEach(rodada => { 
+			this.confrontoList.push(...rodada.confrontoList);
+		});
+
 		this.evento = this.grupo.faseEvento.evento;
 		this.eventoService.findFaseEventoByEvento(this.evento).subscribe((faseEventoList) => {
 			 this.faseEventoList = faseEventoList;
@@ -112,12 +136,55 @@ export class GrupoCadastroComponent implements OnInit {
 	}
   }
   
+  addConfronto(pais: Pais): void {
+  	const index = this.rodadaList.map(rodada => rodada.descricao).indexOf(this.rodada.descricao);
+  	
+	if (this.rodadaList === null || !(index !== -1))
+		this.rodadaList.push(this.rodada);
+
+  	if (this.confronto.adversarioCasa === null || this.confronto.adversarioCasa === undefined) {
+  		this.confronto.adversarioCasa = pais;
+	} else {
+		this.confronto.adversarioFora = pais;
+		this.confronto.rodadaDescricao = this.rodada.descricao;
+
+		this.rodadaList.forEach(rodada => { 
+			if (rodada.descricao === this.rodada.descricao) {
+				if (rodada.confrontoList === undefined)
+					rodada.confrontoList = [] as Confronto[];
+
+				rodada.confrontoList.push(this.confronto);
+			}
+		});
+		
+		this.confrontoList.push(this.confronto);
+		this.confronto = {} as Confronto;
+		this.rodada = {} as Rodada;
+	}
+  }
+  
   onEventoChange($event: any, evento: Evento) {
     if ($event.isUserInput) { // ignore on deselection of the previous option
 	    this.eventoService.findFaseEventoByEvento(evento).subscribe((faseEventoList) => {
 			 this.faseEventoList = faseEventoList;
 		});
 	}
+  }
+  
+  goTabClick(tabGroup: MatTabGroup) {
+  	if (!tabGroup || !(tabGroup instanceof MatTabGroup)) 
+  		return;
+
+  	const tabCount = tabGroup._tabs.length;
+  	tabGroup.selectedIndex = (tabGroup.selectedIndex + 1) % tabCount;
+  }
+  
+  backTabClick(tabGroup: MatTabGroup) {
+  	if (!tabGroup || !(tabGroup instanceof MatTabGroup)) 
+  		return;
+
+  	const tabCount = tabGroup._tabs.length;
+  	tabGroup.selectedIndex = (tabGroup.selectedIndex - 1) % tabCount;
   }
   
   displayFn(pais: Pais): String {

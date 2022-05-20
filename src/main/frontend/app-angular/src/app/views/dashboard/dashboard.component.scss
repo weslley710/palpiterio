@@ -1,8 +1,3 @@
-mat-card {
-	max-width: 80%;
-	margin: 2em auto;
-}
-
 ::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
 ::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
   font-weight: 500;
@@ -13,4 +8,8 @@ mat-card {
 .toolbar .mat-toolbar-row, .mat-toolbar-single-row {
 	height: 35px !important;
 	font-size: 16px;
+}
+
+.flag-icon {
+	top: 4px;
 }

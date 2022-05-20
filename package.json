@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@kolkov/angular-editor": "^2.0.0",
+    "ngx-custom-validators": "^11.0.1",
+    "ngx-editor": "^12.4.1"
+  }
+}

@@ -12,19 +12,25 @@ export class DefaultLayoutComponent implements OnInit {
 //  public navItems = navItems;
 
   public navItems = [];
+  
+  public showMenu = true;
 
-  constructor(private authenticationService: AuthenticationService, private navData: NavData) { }
+  constructor(private authService: AuthenticationService, private navData: NavData) { }
 
   ngOnInit(): void {
-	this.navItems = this.navData.getNavItens();
+	if (this.authService.roleMatch(['ADMIN'])) {
+		this.navItems = this.navData.getNavItens();
+	} else {
+		this.showMenu = false;
+	}
   }
 
   logout() {
-	this.authenticationService.logOut();
+	this.authService.logOut();
   }
   
   getUserLogged() {
-	return this.authenticationService.userLogged();
+	return this.authService.userLogged();
   }
 
   toggleMinimize(e) {

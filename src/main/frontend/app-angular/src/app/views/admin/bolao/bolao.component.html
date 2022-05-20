@@ -5,7 +5,7 @@
 				<mat-toolbar> 
 					<mat-toolbar-row> 
 						<mat-icon>menu</mat-icon>
-						<span>Grupos</span>
+						<span>Bolões</span>
 						<span class="spacer"></span>
 					</mat-toolbar-row>
 				</mat-toolbar>
@@ -23,49 +23,39 @@
 							<mat-form-field appearance="standard">
 								<mat-icon style="position: absolute; margin-top: -3px;">search</mat-icon>
 								<mat-label style="margin-left: 25px;">Pesquisar</mat-label>
-								<input style="margin-left: 25px;" matInput (keyup)="applyFilter($event)" placeholder="nome, organizador" #input>
+								<input style="margin-left: 25px;" matInput (keyup)="applyFilter($event)" placeholder="nome, evento" #input>
 							</mat-form-field>
 						</div>
 						<div class="cabecalho-pesquisa">
-							<button (click)="cadastrar()" class="mat-elevation-z8 botao-cabecalho" mat-raised-button color="primary">Cadastrar Grupo</button>
+							<button (click)="cadastrar()" class="mat-elevation-z8 botao-cabecalho" mat-raised-button color="primary">Cadastrar Bolão</button>
 						</div>
 					</div>
 					
 					<table mat-table [dataSource]="dataSource">
 	
-						<ng-container matColumnDef="evento">
-							<th mat-header-cell *matHeaderCellDef>Evento</th>
-							<td mat-cell *matCellDef="let grupo">{{grupo.faseEvento.evento.nome}}</td>
-						</ng-container>
-						
-						<ng-container matColumnDef="faseEvento">
-							<th mat-header-cell *matHeaderCellDef>Fase Evento</th>
-							<td mat-cell *matCellDef="let grupo">{{grupo.faseEvento.descricao}}</td>
-						</ng-container>
-						
 						<ng-container matColumnDef="nome">
 							<th mat-header-cell *matHeaderCellDef>Nome</th>
-							<td mat-cell *matCellDef="let grupo">{{grupo.nome}}</td>
+							<td mat-cell *matCellDef="let bolao">{{bolao.nome}}</td>
+						</ng-container>
+	
+						<ng-container matColumnDef="dataInicio">
+							<th mat-header-cell *matHeaderCellDef>Dt. de Inicio</th>
+							<td mat-cell *matCellDef="let bolao">{{ bolao.dataInicio | date: 'dd/MM/yyyy HH:mm' }}</td>
 						</ng-container>
 						
-						<ng-container matColumnDef="participanteList">
-							<th mat-header-cell *matHeaderCellDef>Participantes</th>
-							<td mat-cell *matCellDef="let grupo" style="display: flex; justify-content: space-between;">
-								<span *ngFor = "let pais of grupo.participanteList" style="margin-top: 5px;">
-									{{pais.sigla}}
-									<i class="flag-icon {{pais.bandeira}} h3" title="{{pais.nome}}"></i>										
-								</span>
-							</td>
+						<ng-container matColumnDef="evento">
+							<th mat-header-cell *matHeaderCellDef>Evento</th>
+							<td mat-cell *matCellDef="let bolao">{{bolao.evento.nome}}</td>
 						</ng-container>
-						
+	
 						<ng-container matColumnDef="acoes">
 							<th class="align-center" mat-header-cell *matHeaderCellDef>Ações</th>
-							<td class="align-center" mat-cell *matCellDef="let grupo">
+							<td class="align-center" mat-cell *matCellDef="let bolao">
 								<div class="actions">
-									<button (click)="editar(grupo.id)" mat-mini-fab color="accent">
+									<button (click)="editar(bolao.id)" mat-mini-fab color="accent">
 										<mat-icon>edit</mat-icon>
 									</button>
-									<button (click)="deletar(grupo.id)" mat-mini-fab color="warn">
+									<button (click)="deletar(bolao.id)" mat-mini-fab color="warn">
 										<mat-icon>delete</mat-icon>
 									</button>
 								</div>

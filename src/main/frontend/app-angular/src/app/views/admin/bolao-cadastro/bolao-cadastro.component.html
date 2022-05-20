@@ -1,0 +1,45 @@
+<div class="animated fadeIn mat-elevation-z8">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<mat-toolbar> 
+					<mat-toolbar-row> 
+						<mat-icon>menu</mat-icon>
+						<span *ngIf="state == 'cadastrar'">Cadastrar Bolão</span>
+						<span *ngIf="state == 'editar'">Editar Bolão</span>
+						<span class="spacer"></span>
+					</mat-toolbar-row>
+				</mat-toolbar>
+		        <div class="card-body">
+					<form #formulario="ngForm">
+						<div class="form">
+						  	<mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>Nome</mat-label>
+						    	<input [(ngModel)]="bolao.nome" name="bolao.nome" matInput maxlength="50" required>
+						  	</mat-form-field>
+						  	
+						  	<mat-form-field appearance="outline" [style.width.%]="25">
+							    <mat-label>Data de Inicio</mat-label>
+							    <input [(ngModel)]="bolao.dataInicio" name="bolao.dataInicio" matInput maxlength="16" type="datetime-local">
+						  	</mat-form-field>
+						  	
+						  	<mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>Evento</mat-label>
+						    	<mat-select [(ngModel)]="bolao.evento" name="bolao.evento" [compareWith]="compareWith">
+								   <mat-option *ngFor="let evento of eventoList" [value]="evento">{{evento.nome}}</mat-option>
+								</mat-select>
+						  	</mat-form-field>
+						</div>
+
+					  	<div class="buttons">
+					  		<button (click)="salvar()" [disabled]="!formulario.form.valid" mat-raised-button color="primary" *ngIf="state != 'editar'">Salvar</button>
+					  		<button (click)="atualizar()" [disabled]="!formulario.form.valid" mat-raised-button color="primary" *ngIf="state == 'editar'">Atualizar</button>
+					  		<button (click)="cancelar()" mat-raised-button color="warn">Cancelar</button>
+					  	</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!--/.col-->
+	</div>
+</div>

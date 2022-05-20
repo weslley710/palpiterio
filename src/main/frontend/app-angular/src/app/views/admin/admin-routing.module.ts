@@ -11,6 +11,8 @@ import { EventoCadastroComponent } from './evento-cadastro/evento-cadastro.compo
 import { EventoComponent } from './evento/evento.component';
 import { GrupoCadastroComponent } from './grupo-cadastro/grupo-cadastro.component';
 import { GrupoComponent } from './grupo/grupo.component';
+import { BolaoCadastroComponent } from './bolao-cadastro/bolao-cadastro.component';
+import { BolaoComponent } from './bolao/bolao.component';
 
 const routes: Routes = [
 	{
@@ -122,6 +124,27 @@ const routes: Routes = [
 		        component: GrupoCadastroComponent,
 		        data: {
 		        	title: 'Editar Grupo'
+        		}
+      		},
+      		{
+        		path: 'bolao',
+		        component: BolaoComponent,
+		        data: {
+		        	title: 'Bolões'
+        		}
+      		},
+      		{
+        		path: 'bolao-cadastro',
+		        component: BolaoCadastroComponent,
+		        data: {
+		        	title: 'Cadastrar Bolão'
+        		}
+      		},
+      		{
+        		path: 'bolao-cadastro/:id',
+		        component: BolaoCadastroComponent,
+		        data: {
+		        	title: 'Editar Bolão'
         		}
       		}
   		]

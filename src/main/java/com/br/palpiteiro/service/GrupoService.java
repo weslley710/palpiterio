@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.br.palpiteiro.domain.Confronto;
 import com.br.palpiteiro.domain.Grupo;
+import com.br.palpiteiro.domain.Rodada;
 import com.br.palpiteiro.repository.GrupoRepository;
 import com.br.palpiteiro.service.exception.ObjectNotFoundException;
 
@@ -32,9 +34,13 @@ public class GrupoService {
 
 	public Grupo save(Grupo grupo) {
 		
-//		for (FaseGrupo faseGrupo : grupo.getFaseGrupoList()) {
-//			faseGrupo.setGrupo(grupo);
-//		}
+		for (Rodada rodada : grupo.getRodadaList()) {
+			rodada.setGrupo(grupo);
+			
+			for (Confronto confronto : rodada.getConfrontoList()) {
+				confronto.setRodada(rodada);
+			}
+		}
 
 		return grupoRepository.save(grupo);
 	}
@@ -46,6 +52,6 @@ public class GrupoService {
 
 	public Grupo update(Grupo grupo) {
 
-		return grupoRepository.save(grupo);
+		return save(grupo);
 	}
 }

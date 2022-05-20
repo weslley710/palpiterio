@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Grupo extends PersistentEntityImpl {
@@ -35,6 +38,10 @@ public class Grupo extends PersistentEntityImpl {
 	@ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "grupo_pais", joinColumns = {@JoinColumn(name = "grupo_id")}, inverseJoinColumns = {@JoinColumn(name = "pais_id")})
 	private List<Pais> participanteList;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "grupo")
+	@JsonIgnoreProperties("grupo")
+	private List<Rodada> rodadaList;
 
 	public Integer getId() {
 		return id;
@@ -74,5 +81,13 @@ public class Grupo extends PersistentEntityImpl {
 
 	public void setFaseEvento(FaseEvento faseEvento) {
 		this.faseEvento = faseEvento;
+	}
+
+	public List<Rodada> getRodadaList() {
+		return rodadaList;
+	}
+
+	public void setRodadaList(List<Rodada> rodadaList) {
+		this.rodadaList = rodadaList;
 	}
 }

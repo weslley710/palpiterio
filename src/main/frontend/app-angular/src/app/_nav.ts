@@ -56,6 +56,7 @@ export class NavData {
 		nav.children.push(this.menuAdminGrupo());
 		nav.children.push(this.menuAdminFuncao());
 		nav.children.push(this.menuAdminPais());
+		nav.children.push(this.menuAdminBolao());
 
 		if (!this.authService.roleMatch(['ADMIN'])) {		
 			nav.attributes = { hidden: true };
@@ -140,6 +141,23 @@ export class NavData {
 		
 		nav.name = 'Paises';
 		nav.url = '/admin/pais';
+		nav.icon = 'icon-puzzle';
+		
+		if (!this.authService.roleMatch(['ADMIN'])) {		
+			nav.attributes = { hidden: true };
+
+			return nav;
+		} else {
+			return nav;	
+		}
+	}
+	
+	menuAdminBolao() :INavData {
+		
+		const nav: INavData = {};
+		
+		nav.name = 'Bolões';
+		nav.url = '/admin/bolao';
 		nav.icon = 'icon-puzzle';
 		
 		if (!this.authService.roleMatch(['ADMIN'])) {		
