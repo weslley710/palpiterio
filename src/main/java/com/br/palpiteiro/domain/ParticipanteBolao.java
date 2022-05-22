@@ -1,7 +1,5 @@
 package com.br.palpiteiro.domain;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Bolao extends PersistentEntityImpl {
+public class ParticipanteBolao extends PersistentEntityImpl {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -19,18 +17,15 @@ public class Bolao extends PersistentEntityImpl {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(length = 50, nullable = false, unique = true)
-	private String nome;
+	@Column(nullable = false)	
+	private Boolean isAtivo;
 
-	@Column(nullable = false)
-	private LocalDateTime dataInicio;
+	@ManyToOne
+	@JoinColumn(name="bolao_id", nullable = false)
+	private Bolao bolao;
 	
 	@ManyToOne
-	@JoinColumn(name="evento_id", nullable = false)
-	private Evento evento;
-	
-	@ManyToOne
-	@JoinColumn(name="usuario_id")
+	@JoinColumn(name="usuario_id", nullable = false)
 	private Usuario usuario;
 
 	public Integer getId() {
@@ -41,28 +36,20 @@ public class Bolao extends PersistentEntityImpl {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public Boolean getIsAtivo() {
+		return isAtivo;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setIsAtivo(Boolean isAtivo) {
+		this.isAtivo = isAtivo;
 	}
 
-	public LocalDateTime getDataInicio() {
-		return dataInicio;
+	public Bolao getBolao() {
+		return bolao;
 	}
 
-	public void setDataInicio(LocalDateTime dataInicio) {
-		this.dataInicio = dataInicio;
-	}
-
-	public Evento getEvento() {
-		return evento;
-	}
-
-	public void setEvento(Evento evento) {
-		this.evento = evento;
+	public void setBolao(Bolao bolao) {
+		this.bolao = bolao;
 	}
 
 	public Usuario getUsuario() {

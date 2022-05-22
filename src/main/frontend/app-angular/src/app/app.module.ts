@@ -51,6 +51,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 
 import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
+import { PaymentDialogComponent } from './dialogs/confirm-dialog/payment-dialog.component';
 
 @NgModule({
   imports: [
@@ -80,7 +81,8 @@ import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.
     P500Component,
     LoginComponent,
     RegisterComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    PaymentDialogComponent
   ],
   providers: [
     {
@@ -102,7 +104,8 @@ import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.
   ],
   bootstrap: [ AppComponent ],
   entryComponents: [
-	ConfirmDialogComponent
+	ConfirmDialogComponent,
+	PaymentDialogComponent
   ]
 })
 

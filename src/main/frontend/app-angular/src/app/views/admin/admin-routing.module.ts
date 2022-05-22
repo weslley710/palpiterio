@@ -13,6 +13,9 @@ import { GrupoCadastroComponent } from './grupo-cadastro/grupo-cadastro.componen
 import { GrupoComponent } from './grupo/grupo.component';
 import { BolaoCadastroComponent } from './bolao-cadastro/bolao-cadastro.component';
 import { BolaoComponent } from './bolao/bolao.component';
+import { ParticipanteBolaoComponent } from './participante-bolao/participante-bolao.component';
+import { ResultadoConfrontoComponent } from './resultado-confronto/resultado-confronto.component';
+import { ResultadoConfrontoCadastroComponent } from './resultado-confronto-cadastro/resultado-confronto-cadastro.component';
 
 const routes: Routes = [
 	{
@@ -145,6 +148,34 @@ const routes: Routes = [
 		        component: BolaoCadastroComponent,
 		        data: {
 		        	title: 'Editar Bolão'
+        		}
+      		},
+      		{
+        		path: 'participante-bolao',
+		        component: ParticipanteBolaoComponent,
+		        data: {
+		        	title: 'Participantes dos Bolões'
+        		}
+      		},
+      		{
+        		path: 'resultado-confronto',
+		        component: ResultadoConfrontoComponent,
+		        data: {
+		        	title: 'Resultados dos Confrontos'
+        		}
+      		},
+      		{
+        		path: 'resultado-confronto-cadastro',
+		        component: ResultadoConfrontoCadastroComponent,
+		        data: {
+		        	title: 'Cadastrar Resultado do Confronto'
+        		}
+      		},
+      		{
+        		path: 'resultado-confronto-cadastro/:id',
+		        component: ResultadoConfrontoCadastroComponent,
+		        data: {
+		        	title: 'Editar Resultado do Confronto'
         		}
       		}
   		]

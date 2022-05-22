@@ -15,6 +15,7 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -27,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 	    @NamedAttributeNode("palpiteList"),
 	    @NamedAttributeNode("adversarioCasa"),
 	    @NamedAttributeNode("adversarioFora"),
+	    @NamedAttributeNode("resultadoConfronto"),
 	    @NamedAttributeNode(value = "rodada", subgraph = "grupo")
 	},
 		subgraphs = {
@@ -66,6 +68,10 @@ public class Confronto extends PersistentEntityImpl {
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JsonIgnoreProperties("confronto")
 	private List<Palpite> palpiteList;
+	
+	@OneToOne(mappedBy = "confronto")
+	@JsonIgnoreProperties("confronto")
+	private ResultadoConfronto resultadoConfronto;
 
 	public Integer getId() {
 		return id;
@@ -113,5 +119,13 @@ public class Confronto extends PersistentEntityImpl {
 
 	public void setPalpiteList(List<Palpite> palpiteList) {
 		this.palpiteList = palpiteList;
+	}
+
+	public ResultadoConfronto getResultadoConfronto() {
+		return resultadoConfronto;
+	}
+
+	public void setResultadoConfronto(ResultadoConfronto resultadoConfronto) {
+		this.resultadoConfronto = resultadoConfronto;
 	}
 }

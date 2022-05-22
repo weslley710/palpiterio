@@ -57,6 +57,8 @@ export class NavData {
 		nav.children.push(this.menuAdminFuncao());
 		nav.children.push(this.menuAdminPais());
 		nav.children.push(this.menuAdminBolao());
+		nav.children.push(this.menuAdminParticipanteBolao());
+		nav.children.push(this.menuAdminResultadoConfronto());
 
 		if (!this.authService.roleMatch(['ADMIN'])) {		
 			nav.attributes = { hidden: true };
@@ -158,6 +160,40 @@ export class NavData {
 		
 		nav.name = 'Bolões';
 		nav.url = '/admin/bolao';
+		nav.icon = 'icon-puzzle';
+		
+		if (!this.authService.roleMatch(['ADMIN'])) {		
+			nav.attributes = { hidden: true };
+
+			return nav;
+		} else {
+			return nav;	
+		}
+	}
+	
+	menuAdminParticipanteBolao() :INavData {
+		
+		const nav: INavData = {};
+		
+		nav.name = 'Participantes dos Bolões';
+		nav.url = '/admin/participante-bolao';
+		nav.icon = 'icon-puzzle';
+		
+		if (!this.authService.roleMatch(['ADMIN'])) {		
+			nav.attributes = { hidden: true };
+
+			return nav;
+		} else {
+			return nav;	
+		}
+	}
+	
+	menuAdminResultadoConfronto() :INavData {
+		
+		const nav: INavData = {};
+		
+		nav.name = 'Resultado dos Confrontos';
+		nav.url = '/admin/resultado-confronto';
 		nav.icon = 'icon-puzzle';
 		
 		if (!this.authService.roleMatch(['ADMIN'])) {		

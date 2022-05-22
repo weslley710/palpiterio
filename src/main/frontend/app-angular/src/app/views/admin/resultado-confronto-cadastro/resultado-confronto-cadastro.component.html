@@ -1,0 +1,45 @@
+<div class="animated fadeIn mat-elevation-z8">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<mat-toolbar> 
+					<mat-toolbar-row> 
+						<mat-icon>menu</mat-icon>
+						<span *ngIf="state == 'cadastrar'">Cadastrar Resultado do Confronto</span>
+						<span *ngIf="state == 'editar'">Editar Resultado do Confronto</span>
+						<span class="spacer"></span>
+					</mat-toolbar-row>
+				</mat-toolbar>
+		        <div class="card-body">
+					<form #formulario="ngForm">
+						<div class="form">
+						  	<mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>Placar Casa</mat-label>
+						    	<input [(ngModel)]="resultadoConfronto.placarCasa" name="resultadoConfronto.plcarCasa" matInput maxlength="1" required>
+						  	</mat-form-field>
+						  	
+						  	<mat-form-field appearance="outline" [style.width.%]="25">
+							    <mat-label>Placar Fora</mat-label>
+							    <input [(ngModel)]="resultadoConfronto.placarFora" name="resultadoConfronto.plcarFora" matInput maxlength="1" required>
+						  	</mat-form-field>
+						  	
+						  	<mat-form-field appearance="outline" [style.width.%]="25">
+						    	<mat-label>Confronto</mat-label>
+						    	<mat-select [(ngModel)]="resultadoConfronto.confronto" name="resultadoConfronto.confronto" [compareWith]="compareWith" required>
+								   <mat-option *ngFor="let confronto of confrontoList" [value]="confronto">{{confronto.adversarioCasa.sigla}} vs {{confronto.adversarioFora.sigla}} [{{confronto.rodada.descricao}} - {{confronto.rodada.grupo.nome}}]</mat-option>
+								</mat-select>
+						  	</mat-form-field>
+						</div>
+
+					  	<div class="buttons">
+					  		<button (click)="salvar()" [disabled]="!formulario.form.valid" mat-raised-button color="primary" *ngIf="state != 'editar'">Salvar</button>
+					  		<button (click)="atualizar()" [disabled]="!formulario.form.valid" mat-raised-button color="primary" *ngIf="state == 'editar'">Atualizar</button>
+					  		<button (click)="cancelar()" mat-raised-button color="warn">Cancelar</button>
+					  	</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!--/.col-->
+	</div>
+</div>

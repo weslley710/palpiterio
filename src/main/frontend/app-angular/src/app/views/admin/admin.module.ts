@@ -18,6 +18,9 @@ import { GrupoComponent } from './grupo/grupo.component';
 import { GrupoCadastroComponent } from './grupo-cadastro/grupo-cadastro.component';
 import { BolaoComponent } from './bolao/bolao.component';
 import { BolaoCadastroComponent } from './bolao-cadastro/bolao-cadastro.component';
+import { ParticipanteBolaoComponent } from './participante-bolao/participante-bolao.component';
+import { ResultadoConfrontoComponent } from './resultado-confronto/resultado-confronto.component';
+import { ResultadoConfrontoCadastroComponent } from './resultado-confronto-cadastro/resultado-confronto-cadastro.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { BolaoCadastroComponent } from './bolao-cadastro/bolao-cadastro.componen
     GrupoComponent,
     GrupoCadastroComponent,
     BolaoComponent,
-    BolaoCadastroComponent
+    BolaoCadastroComponent,
+    ParticipanteBolaoComponent,
+    ResultadoConfrontoComponent,
+    ResultadoConfrontoCadastroComponent
   ],
   imports: [
 	FormsModule,

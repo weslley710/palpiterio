@@ -3,8 +3,8 @@
     <div class="col-sm-6 col-lg-3" style="cursor: pointer;" (click)="changeDashboard('palpite')">
       <div class="card text-white mat-elevation-z8" style="background-color: #2eadd3;">
         <div class="card-body pb-0">
-          <div class="text-value">Meus Palpites (Copa do Mundo)</div>
-          <div>{{palpitesRegistrados}} de {{palpitesEsperados}} palpites registrados!</div>
+          <div class="text-value">Meus Palpites</div>
+          <div>{{palpitesRegistrados}} de {{palpitesEsperados}} palpites [Copa do Mundo]</div>
           <br>
         </div>
       </div>
@@ -12,17 +12,6 @@
     <div class="col-sm-6 col-lg-3" style="cursor: pointer;" (click)="changeDashboard('bolao')">
       <div class="card text-white mat-elevation-z8" style="background-color: #FF6347;">
         <div class="card-body pb-0">
-          <div class="btn-group float-right" dropdown>
-            <button type="button" class="btn btn-transparent dropdown-toggle p-0" dropdownToggle>
-              <i class="icon-settings"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </div>
           <div class="text-value">Meus Bolões</div>
           <div>Participar | Classificação | Regulamento </div>
           <br>
@@ -32,16 +21,6 @@
     <div class="col-sm-6 col-lg-3">
       <div class="card text-white bg-warning">
         <div class="card-body pb-0">
-          <div class="btn-group float-right" dropdown>
-            <button type="button" class="btn btn-transparent dropdown-toggle p-0" dropdownToggle>
-              <i class="icon-settings"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </div>
           <div class="text-value">9.823</div>
           <div>Members online</div>
         </div>
@@ -50,16 +29,6 @@
     <div class="col-sm-6 col-lg-3">
       <div class="card text-white bg-danger">
         <div class="card-body pb-0">
-          <div class="btn-group float-right" dropdown>
-            <button type="button" class="btn btn-transparent dropdown-toggle p-0" dropdownToggle>
-              <i class="icon-settings"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </div>
           <div class="text-value">9.823</div>
           <div>Members online</div>
         </div>
@@ -79,19 +48,25 @@
 							  		<div style="margin-top: 10px; width: 100%;"> 
 										<div *ngFor = "let confronto of confrontoList; let j = index">
 											<ng-container *ngIf = "confronto.rodada.descricao === rodada.descricao">
-												<div style="width: 250px; text-align: center; display: inline-block; float: left; margin-bottom: 10px; margin-left: 5px;" class="mat-elevation-z8">
+												<div style="width: 270px; text-align: center; display: inline-block; float: left; margin-bottom: 10px; margin-left: 5px;" class="mat-elevation-z8">
 													<span style="font-weight: bold;">{{confronto.rodada.grupo.nome}}</span>
 													<p style="font-weight: bold; background-color: #FAFAD2;">{{confronto.dataHora | date: 'EEEE, dd/MM/yyyy HH:mm'}}</p>
 													<div>
-														<span>{{confronto.adversarioCasa.sigla}}</span>
+														<span>
+															{{confronto.adversarioCasa.sigla}} 
+														</span>
 														<i style="margin-left: 5px; cursor: help;" class="flag-icon {{confronto.adversarioCasa.bandeira}} h3" title="{{confronto.adversarioCasa.nome}}"></i>										
-
+														
+														<span class="badge badge-success badge-pill badge-left">{{ confronto.resultadoConfronto != null ? confronto.resultadoConfronto.placarCasa : '' }}</span>
 														<input required="required" type="number" name="placarCasa{{j + 1}}" [(ngModel)]="confronto.palpiteList[0].placarCasa" oninput="this.value = this.value.slice(0, this.maxLength)" maxlength="1" style="width: 25px; margin-left: 5px;">
 														<span style="margin-left: 5px;">X</span>
 														<input required="required" type="number" name="placarFora{{j + 1}}" [(ngModel)]="confronto.palpiteList[0].placarFora" oninput="this.value = this.value.slice(0, this.maxLength)" maxlength="1" style="width: 25px; margin-left: 5px;">
+														<span class="badge badge-success badge-pill badge-right">{{ confronto.resultadoConfronto != null ? confronto.resultadoConfronto.placarFora : '' }}</span>
 
 														<i style="margin-left: 5px; cursor: help;" class="flag-icon {{confronto.adversarioFora.bandeira}} h3" title="{{confronto.adversarioFora.nome}}"></i>
-														<span style="margin-left: 5px;">{{confronto.adversarioFora.sigla}}</span>
+														<span style="margin-left: 5px;">
+															{{confronto.adversarioFora.sigla}}
+														</span>
 													</div>
 													<br>
 												</div>
@@ -113,43 +88,102 @@
 			<!--/.col-->
 		  </div>
 	  </div>
+	  <div class="animated fadeIn" *ngIf="dashboard == 'bolao'">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div [hidden]="isLoading">
+						<div class="form">
+						  	<table mat-table [dataSource]="dsBolao" multiTemplateDataRows>
+							  
+							  	<ng-container matColumnDef="nome">
+									<th mat-header-cell *matHeaderCellDef>Nome</th>
+									<td mat-cell *matCellDef="let bolao">{{ bolao.nome }}</td>
+								</ng-container>
+			
+								<ng-container matColumnDef="dataInicio">
+									<th mat-header-cell *matHeaderCellDef>Dt. de Inicio</th>
+									<td mat-cell *matCellDef="let bolao">{{ bolao.dataInicio | date: 'dd/MM/yyyy HH:mm' }}</td>
+								</ng-container>
+								
+								<ng-container matColumnDef="usuario">
+									<th mat-header-cell *matHeaderCellDef>Criado por</th>
+									<td mat-cell *matCellDef="let bolao">{{ bolao.usuario.nome }}</td>
+								</ng-container>
+								
+								<ng-container matColumnDef="evento">
+									<th mat-header-cell *matHeaderCellDef>Evento</th>
+									<td mat-cell *matCellDef="let bolao">{{ bolao.evento.nome }}</td>
+								</ng-container>
+								
+								<ng-container matColumnDef="acoes">
+									<th class="align-center" mat-header-cell *matHeaderCellDef>Ações</th>
+									<td class="align-center" mat-cell *matCellDef="let bolao">
+										<div class="actions-dashboard">
+											<button (click)="participar(bolao)" color="accent" mat-raised-button *ngIf="(bolao.dataInicio | date: 'dd/MM/yyyy HH:mm') > (dataAtual | date: 'dd/MM/yyyy HH:mm') && !participanteInscrito">Participar</button>
+											<button (click)="participar(bolao)" color="primary" mat-raised-button *ngIf="participantePago">Entrar</button>
+											<button (click)="showQrCode()" color="accent" mat-raised-button *ngIf="participanteInscrito && !participantePago">QR Code</button>
+										</div>
+									</td>
+								</ng-container>
+
+							  	<!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+							  	<ng-container matColumnDef="expandedDetail">
+							    	<td mat-cell *matCellDef="let bolao" [attr.colspan]="displayedColumns.length">
+							      		<br>
+							      		<div class="example-bolao-detail mat-elevation-z8" [@detailExpand]="'expanded'">
+											<div class="example-element-description mat-elevation-z8">
+							          			<span> * Tendo em vista os itens abaixo apresentados, eu, de forma livre e esclarecida, manifesto meu consentimento em participar do {{bolao.nome}}. </span>
+							        		</div>
+							        		<div class="example-element-diagram">
+						          				1) Para participar do <b>{{bolao.nome}}</b> você deverá concordar com todos os termos apresentadados, solicitar a inscrição e realizar a pagamento da taxa de inscrição no valor de R$ 50.
+						          				Sua participação será confirmada mediante checagem do pagamento pelo moderador do bolão. <br>
+						          				2) Todo o valor arrecadado será distribuido entre os participantes do bolão, sem taxa de administração e de acordo com a seguinte regra de divisão: apenas os 3 (três) melhores 
+						          				pontuadores serão premiados, onde o: <br> <span style="margin-left: 15px;"><b>- 1º recebe 55% | 2º recebe 30% | 3º recebe 15%.</b></span><br>
+						          				3) O participante deverá preencher todos os palpites previamente  o inicio do evento para participar do bolão, sendo certo que os palpites somente poderão ser inseridos ou modificados até o inicio do mesmo.<br>
+						          				4) Apenas os palpites da fase de grupos do evento serão considerados. <br>
+						          				5) A pontuação do bolão se dará da seguinte forma: <br>
+						          				 <span style="margin-left: 15px;">- Acerto do placar exato = 25 pontos (PE)</span><br>
+												 <span style="margin-left: 15px;">- Acerto do resultado (time vencedor ou empate sem o placar exato) = 10 pontos (AR)</span><br>
+												 <span style="margin-left: 15px;">- Acerto do escore de um dos times = 5 pontos (AE)</span><br>
+												6) Havendo empate na pontuação dos participantes, serão considerados, para fins de desempate os seguintes critérios, na respectiva ordem:<br>
+												 <span style="margin-left: 15px;">- O maior número de acertos de placar exatos (PE)</span><br>
+												 <span style="margin-left: 15px;">- O maior número de acertos de resultado (AR)</span><br>
+												 <span style="margin-left: 15px;">- O maior número de acertos do escore de um dos times (AE)</span><br>
+												 <span style="margin-left: 15px;">- A maior antecedência dos palpites</span><br>
+												7) Não haverá devolução de taxa de inscrição paga após o inicio do evento. 
+							        		</div>
+							      		</div>
+							    	</td>
+							  	</ng-container>
+
+							  	<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+							  	<tr mat-row *matRowDef="let bolao columns: displayedColumns;" class="example-element-row" [class.example-expanded-row]="expandedElement === bolao"
+							      	(click)="expandedElement = expandedElement === bolao ? null : bolao">
+							  	</tr>
+							  	<tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/.col-->
+		  </div>
+	  </div>
 	
-    <div class="card-footer">
+    <div class="card-footer mat-elevation-z8" *ngIf="dashboard != 'palpite'">
       <div class="row text-center">
         <div class="col-sm-12 col-md mb-sm-2 mb-0">
-          <div class="text-muted">Visits</div>
-          <strong>29.703 Users (40%)</strong>
-          <div class="progress progress-xs mt-2">
-            <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
+          <div class="title">Participantes Inscritos</div>
+          <div class="subtitle">{{participanteBolaoList.length}}</div>
         </div>
         <div class="col-sm-12 col-md mb-sm-2 mb-0">
-          <div class="text-muted">Unique</div>
-          <strong>24.093 Users (20%)</strong>
-          <div class="progress progress-xs mt-2">
-            <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
+          <div class="title">Participantes Confirmados (Taxa paga)</div>
+          <div class="subtitle">{{ participantesPagos }} / {{participanteBolaoList.length}} ({{participantesPagos > 0 ? (participantesPagos / participanteBolaoList.length * 100).toFixed(2) : 0}}%)</div>
         </div>
         <div class="col-sm-12 col-md mb-sm-2 mb-0">
-          <div class="text-muted">Pageviews</div>
-          <strong>78.706 Views (60%)</strong>
-          <div class="progress progress-xs mt-2">
-            <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-        </div>
-        <div class="col-sm-12 col-md mb-sm-2 mb-0">
-          <div class="text-muted">New Users</div>
-          <strong>22.123 Users (80%)</strong>
-          <div class="progress progress-xs mt-2">
-            <div class="progress-bar bg-danger" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-        </div>
-        <div class="col-sm-12 col-md mb-sm-2 mb-0">
-          <div class="text-muted">Bounce Rate</div>
-          <strong>40.15%</strong>
-          <div class="progress progress-xs mt-2">
-            <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
+          <div class="title">Valor Arrecadado</div>
+          <div class="subtitle">R$ {{ participantesPagos * 50 }}</div>
         </div>
       </div>
     </div>

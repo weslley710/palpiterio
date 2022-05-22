@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ConfirmDialogComponent } from './../dialogs/confirm-dialog/confirm-dialog.component';
+import { PaymentDialogComponent } from './../dialogs/confirm-dialog/payment-dialog.component';
 
 import { MatDialog } from '@angular/material/dialog';
 
@@ -19,6 +20,14 @@ export class DialogService {
 		data: {
 			message: msg
 		}
+	})
+  }
+  
+  openPaymentDialog() {
+	return this.dialog.open(PaymentDialogComponent, {
+		width: '430px',
+		panelClass: 'confirm-dialog-container',
+		disableClose: true
 	})
   }
 }

@@ -5,6 +5,11 @@
   opacity: 1;
 }
 
+.align-center {
+	text-align: center;
+	justify-content: center;
+}
+
 .toolbar .mat-toolbar-row, .mat-toolbar-single-row {
 	height: 35px !important;
 	font-size: 16px;
@@ -12,4 +17,84 @@
 
 .flag-icon {
 	top: 4px;
+}
+
+.mat-form-field-wrapper, .mat-table {
+	margin-left: 0;
+	width: 100% !important;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  border: 2px solid #8470FF;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  min-height: 350px;
+  max-height: 850px;
+}
+
+.example-element-description {
+  color: #8470FF;
+  font-weight: bold;
+  padding: 5px;
+}
+
+.title {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+.subtitle {
+	color: #ADFF2F;
+	font-weight: bold;
+}
+
+.card-footer {
+	padding: 0.50rem 1.00rem
+}
+
+.actions-dashboard {
+	text-align: center;
+}
+
+.actions-dashboard button {
+	margin: 5px;
+    height: 25px;
+    line-height: 15px;
+}
+
+.col-sm-6:hover {
+	transition: transform .2s;
+	transform: scale(1.1);
+}
+
+.badge {
+	position: relative !important;
+}
+
+.badge-left {
+	left: 10px;
+	top: -17px !important;
+}
+
+.badge-light {
+	background-color: #00F5FF !important;
+}
+
+.badge-right {
+	left: -10px;
+	top: -17px !important;
 }
