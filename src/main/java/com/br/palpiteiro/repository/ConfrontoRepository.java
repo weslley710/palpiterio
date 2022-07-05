@@ -13,7 +13,7 @@ import com.br.palpiteiro.domain.Confronto;
 public interface ConfrontoRepository extends JpaRepository<Confronto, Integer> {
 	
 //	@Query(value = "SELECT * from confronto left join palpite pal ON pal.confronto_id = confronto.id and pal.usuario_id = ?1", nativeQuery = true)
-	@Query(value = "SELECT con from Confronto con left join con.palpiteList pal on pal.usuario.id = :usuarioId")
+	@Query(value = "SELECT con from Confronto con left join con.palpiteList pal on pal.usuario.id = :usuarioId order by con.dataHora")
 	@EntityGraph(value = "graph.Confronto")
 	List<Confronto> findAllWithPalpitesByUser(Integer usuarioId);
 }

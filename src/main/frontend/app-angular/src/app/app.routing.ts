@@ -21,7 +21,6 @@ export const routes: Routes = [
   {
     path: '404',
     component: P404Component,
-    canActivate: [AuthGaurdService],
     data: {
       title: 'Page 404'
     }
@@ -36,7 +35,6 @@ export const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
-    canActivate: [AuthGaurdService],
     data: {
       title: 'Register Page'
     }
@@ -55,6 +53,7 @@ export const routes: Routes = [
       },
       {
         path: 'dashboard',
+        canActivate: [AuthGaurdService],
         loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
       }
     ]
@@ -63,7 +62,8 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }) ],
+//  imports: [ RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }) ],
+  imports: [ RouterModule.forRoot(routes, { useHash: true }) ],
   exports: [ RouterModule ]
 })
 

@@ -83,7 +83,7 @@
 				</executions>
 				<configuration>
 					<executable>ng</executable>
-					<workingDirectory>src/main/resources/frontend/angular-app</workingDirectory>
+					<workingDirectory>src/main/resources/frontend/app-angular</workingDirectory>
 					<arguments>
 						<argument>build</argument>
 					</arguments>
@@ -93,6 +93,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+         			<executable>true</executable>
+     			</configuration>
 			</plugin>
 		</plugins>
 	</build>

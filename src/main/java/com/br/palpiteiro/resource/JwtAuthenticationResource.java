@@ -22,6 +22,7 @@ import com.br.palpiteiro.domain.Usuario;
 
 @RestController
 @CrossOrigin
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600, allowCredentials="true")
 public class JwtAuthenticationResource {
 
 	@Autowired

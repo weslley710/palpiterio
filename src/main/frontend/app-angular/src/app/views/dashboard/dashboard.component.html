@@ -121,7 +121,7 @@
 									<td class="align-center" mat-cell *matCellDef="let bolao">
 										<div class="actions-dashboard">
 											<button (click)="participar(bolao)" color="accent" mat-raised-button *ngIf="(bolao.dataInicio | date: 'dd/MM/yyyy HH:mm') > (dataAtual | date: 'dd/MM/yyyy HH:mm') && !participanteInscrito">Participar</button>
-											<button (click)="participar(bolao)" color="primary" mat-raised-button *ngIf="participantePago">Entrar</button>
+											<button color="primary" mat-raised-button *ngIf="participantePago">Entrar</button>
 											<button (click)="showQrCode()" color="accent" mat-raised-button *ngIf="participanteInscrito && !participantePago">QR Code</button>
 										</div>
 									</td>

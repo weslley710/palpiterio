@@ -3,7 +3,9 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map } from "rxjs/operators";
 
 import { Usuario } from 'src/app/models/usuario';
-import { UsuarioService } from '../services/usuario.service'
+import { UsuarioService } from '../services/usuario.service';
+
+import { environment } from 'src/environments/environment';
 
 export class User {
   constructor(public status: string) {}
@@ -15,14 +17,14 @@ export class User {
 
 export class AuthenticationService {
 
-//  private readonly API = 'api/authenticate';
+  private readonly API = environment.baseUrl;
 
   constructor(private httpClient: HttpClient, private usuarioService: UsuarioService) {}
   // Provide username and password for authentication, and once authentication is successful, 
   //store JWT token in session
   authenticate(login, senha) {
     return this.httpClient
-      .post<any>("http://localhost:8080/authenticate", { login, senha })
+      .post<any>(this.API + "/authenticate", { login, senha })
       .pipe(
         map(userLogged => {
           sessionStorage.setItem("login", login);

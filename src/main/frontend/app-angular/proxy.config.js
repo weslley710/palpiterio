@@ -1,7 +1,7 @@
 const PROXY_CONFIG = [
 	{
 		context: ['/api'],
-		target: 'https://app-palpiteiro.herokuapp.com/',
+		target: 'http://localhost:8080/',
 		secure: false
 	}
 ];
